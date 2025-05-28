@@ -78,4 +78,6 @@ Return:
 >DataFrame Statistics Calculated
 >
 >Size in bytes: 2,454,772,600
->
+>Number of partitions: 12
+>Average bytes per partition: 204,564,383.33
+>Recommended partition count: 19
