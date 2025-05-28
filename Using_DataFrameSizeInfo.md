@@ -68,7 +68,22 @@ of the RDD to get the number of rows in each partition
 
 ## Using DataFrameSizeInfo
 
-1. Create a DataFrameSizeInfo object to hold the stats for a given DataFrame
+1. Get the DataFrameSizeInfo class into the Databricks Notebook where you
+want to use it
+
+There are multiple ways to import helpful functions and classes into a Databricks
+Notebook. One way is to copy the code into a cell in the notebook. This may be
+easier in one-off situations. But it is much nicer to be able to run one line
+of code to make the class available.
+
+If you have the class stored in another notebook in your Databricks workspace,
+a nicer way to access the class is through the %run command.
+
+You would use the following code in a cell with just this one line:
+
+`%run /Workspace/path/to/class/notebook`
+
+2. Create a DataFrameSizeInfo object to hold the stats for a given DataFrame
 
 Code:
 
@@ -83,7 +98,7 @@ Return:
 >Average bytes per partition: 204,564,383.33<br>
 >Recommended partition count: 19
 
-2. If there is a need to see the row counts per
+3. If there is a need to see the row counts per
 partition, use DataFrameSizeInfoExtra
 
 Code:
@@ -112,13 +127,13 @@ Return:
 >2,370,630<br>
 >2,370,630
 
-3. Use the recommended partition count to repartition the DataFrame
+4. Use the recommended partition count to repartition the DataFrame
 
 Code:
 
 `df_repartitioned = df.repartition(df_stats.recommended_partition_count)`
 
-4. Creating a new DataFrameSizeInfo object based on this new repartitioned
+5. Creating a new DataFrameSizeInfo object based on this new repartitioned
 DataFrame shows the average bytes per partition have been optimized to be
 closer to 128MB (134,217,728 bytes)
 
