@@ -75,9 +75,71 @@ Code:
 `df_stats = DataFrameSizeInfo(df)`
 
 Return:
+
 >DataFrame Statistics Calculated
 >
 >Size in bytes: 2,454,772,600<br>
 >Number of partitions: 12<br>
 >Average bytes per partition: 204,564,383.33<br>
 >Recommended partition count: 19
+
+2. If there is a need to see the row counts per
+partition, use DataFrameSizeInfoExtra
+
+Code:
+
+`df_stats = DataFrameSizeInfoExtra(df)`
+
+Return:
+
+>DataFrame Statistics Calculated
+>
+>Size in bytes: 2,454,772,600<br>
+>Number of partitions: 12<br>
+>Average bytes per partition: 204,564,383.33<br>
+>Recommended partition count: 19<br>
+>Rows per partition:<br>
+>0<br>
+>982,928<br>
+>1,599,455<br>
+>1,735,425<br>
+>1,735,469<br>
+>1,816,638<br>
+>1,926,110<br>
+>2,112,446<br>
+>2,370,310<br>
+>2,370,620<br>
+>2,370,630<br>
+>2,370,630
+
+3. Use the recommended partition count to repartition the DataFrame
+
+Code:
+
+`df_repartitioned = df.repartition(df_stats.recommended_partition_count)`
+
+4. Creating a new DataFrameSizeInfo object based on this new repartitioned
+DataFrame shows the average bytes per partition have been optimized to be
+closer to 128MB (134,217,728 bytes)
+
+Code:
+
+`df_repartitioned_stats = DataFrameSizeInfo(df_repartitioned)`
+
+Return:
+
+>DataFrame Statistics Calculated
+>
+>Size in bytes: 2,454,772,600<br>
+>Number of partitions: 19<br>
+>Average bytes per partition: 129,198,557.89<br>
+>Recommended partition count: 19
+
+## Conclusion
+
+It is important to stay aware of the size of your DataFrame and repartition
+if the number of partitions is to high or too low, or if the amount of
+data on each partition is not uniform across the DataFrame.
+
+The purpose of the DataFrameSizeInfo class is to help make the investigation
+and effective repartitioning of a DataFrame easier.
